@@ -15,6 +15,7 @@ init_method  	# 簇参数初始化方法，默认为'k-means++'
 max_iter			# 最大迭代次数，默认为300
 tol						# 迭代容差，默认为1e-4
 random_state	# 随机初始状态标记参数，默认为0
+**kwargs			# 参见sklearn.cluster.KMEANS其他关键字
 ```
 
 ```python
@@ -36,11 +37,48 @@ records = optim_params_search(data, n_clusters_list, eval_method = 'calinski_har
 
 参数搜索结果如下：
 
-<img src="README.assets/k-means参数搜索.png" alt="截屏2020-01-27下午4.31.18" style="zoom:40%;" />
+<img src="README.assets/k-means参数搜索.png" alt="截屏2020-01-27下午4.31.18" style="zoom:50%;" />
 
 可见最优n_clusters = 7，相应的聚类效果为：
 
-<img src="README.assets/k-means最优聚类效果.png" alt="截屏2020-01-27下午4.31.37" style="zoom:40%;" />
+<img src="README.assets/k-means最优聚类效果.png" alt="截屏2020-01-27下午4.31.37" style="zoom:50%;" />
+
+
+
+*<u>**1.2 DBSCAN Clustering**</u>*
+
+算法初始化DBSCANClustering对象需要设置以下参数：
+
+```
+eps 					# 同一簇中两个样本间的最大距离
+min_samples		# 一个簇中样本数目下限
+**kwargs			# 参见sklearn.cluster.DBSCAN其他关键字
+```
+
+```python
+dc = DBSCANClustering()
+_ = dc.init_clstr(eps = 2.7, min_samples = 50)  # eps = 2.7, min_samples = 50
+```
+
+使用fit方法对样本X进行聚类，获得模型聚类标签：
+
+```python
+y_pred = dc.fit(data, show = False)
+```
+
+使用optim_params_search函数搜索最优聚类参数eps、min_samples：
+
+```python
+records = optim_params_search(data, eps_list, min_samples_list, eval_method = 'calinski_harabasz')
+```
+
+参数搜索结果如下：
+
+<img src="README.assets/dbscan参数搜索.png" alt="dbscan参数搜索" style="zoom:50%;" />
+
+可见最优参数eps = 2.7、min_samples = 50，相应的聚类效果如下：
+
+<img src="README.assets/dbscan最优聚类效果.png" alt="dbscan最优聚类效果" style="zoom:50%;" />
 
 
 

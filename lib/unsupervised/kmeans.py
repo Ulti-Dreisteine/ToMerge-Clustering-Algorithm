@@ -11,11 +11,15 @@ Created on 2020/1/27 2:01 下午
 @Describe: K-Means无监督聚类
 """
 
-import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn import metrics
+import logging
 import copy
 import sys
+
+logging.basicConfig(level = logging.INFO)
+
+import matplotlib.pyplot as plt
 
 sys.path.append('../..')
 
@@ -25,18 +29,19 @@ from lib import data
 class KMeansClustering(object):
 	"""使用K-Means进行无监督聚类"""
 	
-	def setup(self):
+	def __init__(self):
 		pass
 
 	def init_clstr(self, n_clusters, init_method = 'k-means++', max_iter = 300, tol = 1e-4, random_state = 0, **kwargs):
 		"""
-		初始化聚类
+		初始化聚类器
 		:param n_clusters: int > 0, 簇心数
 		:param init_method: str in {'k-means++', 'random' or an ndarray}, default: 'k-means++', 簇心位置初始化方法
-		:param max_iter: int > 0, default: 300, 最大迭代次数,
+		:param max_iter: int > 0, default: 300, 最大迭代次数
 		:param tol: float, default: 1e-4, 收敛容差
 		:param random_state: int, default: 0, 初始随机状态参数
-		:return:
+		:param kwargs: 参见sklearn.cluster.KMeans其他关键字
+		:return: clstr: sklearn.cluster.KMeans聚类器对象
 		"""
 		self.clstr = KMeans(
 			n_clusters = n_clusters, init = init_method, max_iter = max_iter, tol = tol, random_state = random_state, **kwargs)
@@ -68,7 +73,7 @@ class KMeansClustering(object):
 	
 def optim_params_search(data, n_clusters_list, eval_method):
 	"""
-	肘部搜索法
+	最优参数搜索
 	:param n_clusters_list: list of ints, 聚类候选簇数list
 	:param eval_method: str, 聚类效果评估函数，参见KMeansClustering.cluster_effect_eval()
 	:return: records: dict like {n_cluster_0: score_0, n_cluster_1: score_1, ...}
@@ -78,7 +83,7 @@ def optim_params_search(data, n_clusters_list, eval_method):
 	for n_clusters in n_clusters_list:
 		_ = kmc.init_clstr(n_clusters = n_clusters)
 		y_pred = kmc.fit(copy.deepcopy(data))
-		score = kmc.cluster_effect_eval(data, y_pred, method = eval_method)
+		score = kmc.cluster_effect_eval(copy.deepcopy(data), y_pred, method = eval_method)
 		records[n_clusters] = score
 	return records
 
