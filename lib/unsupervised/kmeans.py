@@ -58,7 +58,6 @@ class KMeansClustering(object):
 		:param method: str in {'calinski_harabasz', 'silhouette', 'davies_bouldin'}
 		:return:
 		"""
-		score = None
 		if method == 'calinski_harabasz':
 			score = metrics.calinski_harabasz_score(data, y_pred)
 		elif method == 'silhouette':
@@ -98,7 +97,7 @@ if __name__ == '__main__':
 	score = kmc.cluster_effect_eval(data, y_pred, method = 'calinski_harabasz')
 	
 	# %% 参数搜索
-	# 评测结果显示最优参数n_clusters=7
+	# 评测结果显示最优参数n_clusters
 	import numpy as np
 	n_clusters_list = list(np.arange(2, 16))
 	methods = ['calinski_harabasz', 'silhouette', 'davies_bouldin']
