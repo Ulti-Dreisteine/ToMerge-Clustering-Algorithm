@@ -44,9 +44,6 @@ class KMeansClustering(object):
 
 	def fit(self, data, show = False):
 		y_pred = self.clstr.fit_predict(data)
-		# score = metrics.calinski_harabasz_score(data, y_pred)
-		# score = metrics.silhouette_score(data, y_pred)
-		# score = metrics.davies_bouldin_score(data, y_pred)
 		if show:
 			plt.scatter(data[:, 0], data[:, 1], c = y_pred, s = 6)
 			plt.show()
