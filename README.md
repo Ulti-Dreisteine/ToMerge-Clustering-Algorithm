@@ -12,10 +12,10 @@
 ```
 n_clusters 		# 聚类簇数
 init_method  	# 簇参数初始化方法，默认为'k-means++'
-max_iter			# 最大迭代次数，默认为300
-tol						# 迭代容差，默认为1e-4
+max_iter		# 最大迭代次数，默认为300
+tol				# 迭代容差，默认为1e-4
 random_state	# 随机初始状态标记参数，默认为0
-**kwargs			# 参见sklearn.cluster.KMEANS其他关键字
+**kwargs		# 参见sklearn.cluster.KMEANS其他关键字
 ```
 
 ```python
@@ -50,9 +50,9 @@ records = optim_params_search(data, n_clusters_list, eval_method = 'calinski_har
 算法初始化DBSCANClustering对象需要设置以下参数：
 
 ```
-eps 					# 同一簇中两个样本间的最大距离
+eps 			# 同一簇中两个样本间的最大距离
 min_samples		# 一个簇中样本数目下限
-**kwargs			# 参见sklearn.cluster.DBSCAN其他关键字
+**kwargs		# 参见sklearn.cluster.DBSCAN其他关键字
 ```
 
 ```python
